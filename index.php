@@ -19,6 +19,22 @@
     $result = $connection->query($sql);
     ?>
 
-    
+    <h1>User List</h1>
+
+    <?php if ($result && $result->num_rows > 0): ?>
+        <ul class="user-list">
+            <?php while ($row = $result->fetch_assoc()): ?>
+                <li class="user-item">
+                    <h2><?php echo htmlspecialchars($row['username']); ?></h2>
+                    <p>Email: <?php echo htmlspecialchars($row['email']); ?></p>
+                    <p>Joined: <?php echo date('F j, Y', strtotime($row['timecreated'])); ?></p>
+                </li>
+            <?php endwhile; ?>
+        </ul>
+    <?php else: ?>
+        <p>No users found.</p>
+    <?php endif; ?>
+
+    <?php $connection->close(); ?>
 </body>
 </html>
